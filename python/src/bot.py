@@ -17,34 +17,37 @@ class MyBot:
      __map_state: MapState
      name : str
      
+     game_date = {
+          "explored":[]
+     }
+
+
      def __init__(self):
-          self.name = "Ballsack"
+          self.name = "Magellan"
 
 
      def on_tick(self, game_state: GameState) -> List[Union[MoveAction, SwitchWeaponAction, RotateBladeAction, ShootAction, SaveAction]]:
           print(game_state)
+          players = game_state.players
+          my_name = "ballsack"
 
 
-
+          me = -1
+          for player, index in enumerate():
+               if player.name == my_name:
+                    me = players[index]
+          
           """
 
-          (en)    This method is called at each game tick. You can define your bot's behavior here. It must return a 
-                    list of actions that will be executed by the server.
-
-                    Possible actions:
                     - MoveAction((x, y))        Directs your bot to move to the specified point at a constant speed.
-
                     - ShootAction((x, y))       If you have the gun equipped, it will shoot at the given coordinates.
-
                     - SaveAction([...])         Allows you to store 100 bytes on the server. When you reconnect, these 
                                                 data will be provided to you by the server.
-
                     - SwitchWeaponAction(id)    Allows you to change your weapon. By default, your bot is unarmed. Here 
                                                 are your choices:
                                                   PlayerWeapon.PlayerWeaponNone
                                                   PlayerWeapon.PlayerWeaponCanon
                                                   PlayerWeapon.PlayerWeaponBlade
-                    
                     - BladeRotateAction(rad)    if you have the blade as a weapon, you can set your
                                                 weapon to the given rotation in radians.
 
@@ -63,7 +66,7 @@ class MyBot:
           return actions
     
     
-     def on_start(self, map_state: MapState):
+     def on_start(self, map_state: MapState, game_state:GameState):
           """
 
                This method is called once at the beginning of the game. You can define actions to be 
