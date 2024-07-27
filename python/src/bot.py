@@ -4,16 +4,16 @@ from core.action import MoveAction, ShootAction, RotateBladeAction, SwitchWeapon
 from core.consts import Consts
 from core.game_state import GameState, PlayerWeapon, Point
 from core.map_state import MapState
+from functions import *
 
 
 class MyBot:
      """
-     (fr) Cette classe représente votre bot. Vous pouvez y définir des attributs et des méthodes qui 
-          seront conservées entre chaque appel de la méthode `on_tick`.
-
      (en) This class represents your bot. You can define attributes and methods in it that will be kept 
           between each call of the `on_tick` method.
      """
+     
+     
      __map_state: MapState
      name : str
      
@@ -31,12 +31,16 @@ class MyBot:
           players = game_state.players
           my_name = "ballsack"
 
-
-          me = -1
+          me = None
           for player, index in enumerate():
                if player.name == my_name:
                     me = players[index]
-          
+
+
+
+
+
+
           """
 
                     - MoveAction((x, y))        Directs your bot to move to the specified point at a constant speed.
@@ -67,6 +71,7 @@ class MyBot:
     
     
      def on_start(self, map_state: MapState, game_state:GameState):
+
           """
 
                This method is called once at the beginning of the game. You can define actions to be 
