@@ -2,8 +2,9 @@ from typing import List, Union
 
 from core.action import MoveAction, ShootAction, RotateBladeAction, SwitchWeaponAction, SaveAction
 from core.consts import Consts
-from core.game_state import GameState, PlayerWeapon, Point
+from core.game_state import GameState, PlayerWeapon, Point, PlayerInfo
 from core.map_state import MapState
+import math as math
 
 
 class MyBot:
@@ -27,13 +28,12 @@ class MyBot:
 
 
      def on_tick(self, game_state: GameState) -> List[Union[MoveAction, SwitchWeaponAction, RotateBladeAction, ShootAction, SaveAction]]:
-          print(game_state)
           players = game_state.players
-          my_name = "ballsack"
+          my_name = "Boule de Sac"
 
 
           me = -1
-          for player, index in enumerate():
+          for index, player in enumerate(players):
                if player.name == my_name:
                     me = players[index]
           
@@ -54,19 +54,22 @@ class MyBot:
           Arguments:
                game_state (GameState): The state of the game.   
           """
-          print(f"Current tick: {game_state.current_tick}")
+          # print(f"Current tick: {game_state.current_tick}")
+
+          nearestPos = self.getNearestPos(me , game_state)
+
+          print(me.playerWeapon)
+
 
           actions = [
-               MoveAction((10.0, 11.34)),
-               ShootAction((11.2222, 13.547)),
-               SwitchWeaponAction(PlayerWeapon.PlayerWeaponBlade),
-               SaveAction(b"Hello World"),
+               MoveAction((nearestPos[0].x , nearestPos[0].y)),
+               ShootAction((nearestPos[0].x , nearestPos[0].y)),
           ]
                     
           return actions
     
     
-     def on_start(self, map_state: MapState, game_state:GameState):
+     def on_start(self, map_state: MapState):
           """
 
                This method is called once at the beginning of the game. You can define actions to be 
@@ -77,7 +80,12 @@ class MyBot:
                                    (en) The state of the map.
           """
           self.__map_state = map_state
-          pass
+
+          actions = [
+               SwitchWeaponAction(PlayerWeapon.PlayerWeaponCanon)
+          ]
+
+          return actions
 
 
      def on_end(self):
@@ -86,4 +94,20 @@ class MyBot:
                at the end of the game.
           """
           pass
-        
+
+     def getNearestPos(self, me: PlayerInfo, game_state: GameState):
+          minDistance = float('inf')
+          closestPlayer = None
+
+          for player in game_state.players:
+               if player == me:
+                    continue  
+
+               playerDistance = math.sqrt((player.pos.x - me.pos.x)**2 + (player.pos.y - me.pos.y)**2)
+               if playerDistance < minDistance:
+                    minDistance = playerDistance
+                    closestPlayer = player
+
+          if closestPlayer is not None:
+               return [closestPlayer.pos , minDistance]
+          return None  # In case no closest player was found
