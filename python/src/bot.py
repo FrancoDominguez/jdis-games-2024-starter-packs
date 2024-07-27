@@ -18,34 +18,15 @@ class MyBot:
      name : str
      
      def __init__(self):
-          self.name = "Magellan"
+          self.name = "Ballsack"
 
 
      def on_tick(self, game_state: GameState) -> List[Union[MoveAction, SwitchWeaponAction, RotateBladeAction, ShootAction, SaveAction]]:
+          print(game_state)
+
+
+
           """
-          (fr)    Cette méthode est appelée à chaque tick de jeu. Vous pouvez y définir 
-                    le comportement de votre bot. Elle doit retourner une liste d'actions 
-                    qui sera exécutée par le serveur.
-
-                    Liste des actions possibles:
-                    - MoveAction((x, y))        permet de diriger son bot, il ira a vitesse
-                                                constante jusqu'à ce point.
-
-                    - ShootAction((x, y))       Si vous avez le fusil comme arme, cela va tirer
-                                                à la coordonnée donnée.
-
-                    - SaveAction([...])         Permet de storer 100 octets dans le serveur. Lors
-                                                de votre reconnection, ces données vous seront
-                                                redonnées par le serveur.
-
-                    - SwitchWeaponAction(id)    Permet de changer d'arme. Par défaut, votre bot
-                                                n'est pas armé, voici vos choix:
-                                                       PlayerWeapon.PlayerWeaponNone
-                                                       PlayerWeapon.PlayerWeaponCanon
-                                                       PlayerWeapon.PlayerWeaponBlade
-                                                       
-                    - BladeRotateAction(rad)    Si vous avez la lame comme arme, vous pouver mettre votre arme
-                                                à la rotation donnée en radian.
 
           (en)    This method is called at each game tick. You can define your bot's behavior here. It must return a 
                     list of actions that will be executed by the server.
@@ -68,8 +49,7 @@ class MyBot:
                                                 weapon to the given rotation in radians.
 
           Arguments:
-               game_state (GameState): (fr): L'état de la partie.
-                                        (en): The state of the game.   
+               game_state (GameState): The state of the game.   
           """
           print(f"Current tick: {game_state.current_tick}")
 
@@ -85,10 +65,8 @@ class MyBot:
     
      def on_start(self, map_state: MapState):
           """
-          (fr) Cette méthode est appelée une seule fois au début de la partie. Vous pouvez y définir des
-               actions à effectuer au début de la partie.
 
-          (en) This method is called once at the beginning of the game. You can define actions to be 
+               This method is called once at the beginning of the game. You can define actions to be 
                performed at the beginning of the game.
 
           Arguments:
@@ -101,10 +79,7 @@ class MyBot:
 
      def on_end(self):
           """
-          (fr) Cette méthode est appelée une seule fois à la fin de la partie. Vous pouvez y définir des
-               actions à effectuer à la fin de la partie.
-
-          (en) This method is called once at the end of the game. You can define actions to be performed 
+               This method is called once at the end of the game. You can define actions to be performed 
                at the end of the game.
           """
           pass
